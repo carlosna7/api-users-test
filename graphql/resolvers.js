@@ -47,13 +47,6 @@ module.exports = {
         async signIn(_, {loginInput: {email, password}}) {
             try {
 
-                // const loggedUser = {
-                //     email: email,
-                //     password: password,
-                //     // permission: permission
-                // }
-                console.log("senha")
-                console.log(password)
                 const user = await User.findOne({ email })
 
                 if(!user) {
@@ -62,20 +55,20 @@ module.exports = {
                     console.log("email correto")
                 }
 
-                console.log("entrando na senha")
-                console.log("teste")
-
-                const isPasswordValid = await user.isValidPassword( password )
-                console.log(isPasswordValid)
-                console.log("saindo da senha")
-
-                if(user.password) 
-
-                if(!isPasswordValid) {
-                    throw new Error("Senha incorreta.")
+                // const isPasswordValid = await user.isValidPassword( password )
+                // console.log(isPasswordValid)
+                
+                if(user.password === password) { // compara a senha digitada com a senha cadastrada no mongoDB
+                    console.log("senha correta")
                 } else {
-                    console.log("senha correto")
+                    throw new Error("senha incorreta") 
                 }
+
+                // if(!isPasswordValid) {
+                //     throw new Error("Senha incorreta.")
+                // } else {
+                //     console.log("senha correto")
+                // }
 
                 const token = jwt.sign(
                     {
@@ -86,6 +79,8 @@ module.exports = {
                         expiresIn: '8h',
                     }
                 )
+
+                console.log(token)
 
                 return {
                     id: user.id,
