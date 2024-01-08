@@ -63,6 +63,7 @@ module.exports = {
                 }
 
                 console.log("entrando na senha")
+                console.log("teste")
 
                 const isPasswordValid = await user.isValidPassword( password )
                 console.log(isPasswordValid)
