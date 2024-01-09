@@ -10,6 +10,7 @@ module.exports = gql`
         permission: String!
         tasks: [Task]
         createdAt: String!
+        token: String
     }
 
     type Task {
@@ -27,10 +28,8 @@ module.exports = gql`
     }
 
     input LoginInput {
-        name: String
         email: String!
         password: String!
-        permission: String
     }
 
     input TaskInput {

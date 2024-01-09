@@ -22,11 +22,19 @@ module.exports = {
         async signUp(_, {userInput: {name, email, password, permission}}) {
             try {
 
+                const oldUser = await User.findOne({ email })
+
+                if(oldUser) {
+                    throw new Error("User already exists.")
+                }
+
+                const hashPassword = await bcrypt.hash(password, 10)
+
                 const createdUser = new User({
                     id: parseInt(Math.random() * 1000000000000),
                     name: name,
-                    email: email,
-                    password: password,
+                    email: email.toLowerCase(),
+                    password: hashPassword,
                     permission: permission,
                     createdAt: new Date().toISOString()
                 })
