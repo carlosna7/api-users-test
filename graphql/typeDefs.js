@@ -9,7 +9,6 @@ module.exports = gql`
         password: String!
         permission: String!
         tasks: [Task]
-        createdAt: String!
         token: String
     }
 
@@ -38,9 +37,9 @@ module.exports = gql`
     }
 
     type Query {
-        user(id: ID!): User!
+        user(id: ID!): User
         getUsers(amount: Int): [User]
-        task(id: ID!): Task!
+        task(id: ID!): Task
         getTasks(amount: Int): [Task]
     }
 

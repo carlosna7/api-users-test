@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Task = require('../models/Task')
 const jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt")
 
 module.exports = {
     Query: {
@@ -35,9 +36,20 @@ module.exports = {
                     name: name,
                     email: email.toLowerCase(),
                     password: hashPassword,
-                    permission: permission,
-                    createdAt: new Date().toISOString()
+                    permission: permission
                 })
+
+                const token = jwt.sign(
+                    {
+                        email: createdUser.email,
+                    },
+                    'token-jwt-carlosna7', 
+                    {
+                        expiresIn: '1h',
+                    }
+                )
+
+                createdUser.token = token
     
                 const res = await createdUser.save() // Save on mongoDB
                 console.log(createdUser._id)
@@ -62,39 +74,33 @@ module.exports = {
                 } else {
                     console.log("email correto")
                 }
-
-                // const isPasswordValid = await user.isValidPassword( password )
-                // console.log(isPasswordValid)
                 
-                if(user.password === password) { // compara a senha digitada com a senha cadastrada no mongoDB
+                if(user && (await bcrypt.compare(password, user.password))) { 
                     console.log("senha correta")
-                } else {
-                    throw new Error("senha incorreta") 
-                }
 
-                // if(!isPasswordValid) {
-                //     throw new Error("Senha incorreta.")
-                // } else {
-                //     console.log("senha correto")
-                // }
+                    const token = jwt.sign(
+                        {
+                            email: user.email,
+                        },
+                        'token-jwt-carlosna7', 
+                        {
+                            expiresIn: '1h',
+                        }
+                    )
 
-                const token = jwt.sign(
-                    {
-                        email: user.email,
-                    },
-                    'token-jwt-carlosna7', 
-                    {
-                        expiresIn: '8h',
+                    user.token = token
+
+                    return {
+                        id: user.id,
+                        ...user._doc,
+                        token: token
                     }
-                )
-
-                console.log(token)
-
-                return {
-                    id: user.id,
-                    ...user._doc,
-                    token: token
+                } else {
+                    throw new Error("Secha incorreta.")
                 }
+
+
+                
 
             } catch (error) {
                 throw new Error("Ocorreu um erro ao realizar o login.")
