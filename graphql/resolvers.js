@@ -52,10 +52,11 @@ module.exports = {
                 createdUser.token = token
     
                 const res = await createdUser.save() // Save on mongoDB
-                console.log(createdUser._id)
-                console.log(createdUser.id)
+                
+                // console.log(createdUser._id)
+                // console.log(createdUser.id)
+
                 return {
-                    
                     id: res.id,
                     ...res._doc
                 }
@@ -90,17 +91,16 @@ module.exports = {
 
                     user.token = token
 
+                    const res = await user.save() // Save on mongoDB
+
                     return {
-                        id: user.id,
-                        ...user._doc,
-                        token: token
+                        id: res.id,
+                        ...res._doc
                     }
+
                 } else {
                     throw new Error("Secha incorreta.")
                 }
-
-
-                
 
             } catch (error) {
                 throw new Error("Ocorreu um erro ao realizar o login.")

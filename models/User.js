@@ -7,7 +7,7 @@ const userSchema = new Schema({
     password: String,
     permission: String,
     tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
-    createdAt: String,
+    token: String,
 });
 
 userSchema.methods.addTask = function (task) {
