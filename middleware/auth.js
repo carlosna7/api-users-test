@@ -11,7 +11,6 @@ module.exports = (context) => {
 
         if(token) {
             try {
-                
                 const user = jwt.verify(token, "token-jwt-carlosna7")
 
                 return user
