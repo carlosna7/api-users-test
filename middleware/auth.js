@@ -1,4 +1,4 @@
-const { AuthenticationError } = requirer('apollo-server')
+const { AuthenticationError } = require('apollo-server')
 
 const jwt = require('jsonwebtoken')
 
