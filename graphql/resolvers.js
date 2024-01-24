@@ -71,7 +71,7 @@ module.exports = {
 
                 const user = await User.findOne({ email })
 
-                console.log(user._id)
+                console.log(user)
 
                 if(!user) {
                     throw new Error("Usuário não encontrado.")
