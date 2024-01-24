@@ -41,7 +41,8 @@ module.exports = {
 
                 const token = jwt.sign(
                     {
-                        email: createdUser.email,
+                        id: createdUser._id,
+                        name: createdUser.name,
                     },
                     'token-jwt-carlosna7', 
                     {
@@ -70,6 +71,8 @@ module.exports = {
 
                 const user = await User.findOne({ email })
 
+                console.log(user._id)
+
                 if(!user) {
                     throw new Error("Usuário não encontrado.")
                 } else {
@@ -81,7 +84,8 @@ module.exports = {
 
                     const token = jwt.sign(
                         {
-                            email: user.email,
+                            id: user._id,
+                            name: user.name,
                         },
                         'token-jwt-carlosna7', 
                         {
