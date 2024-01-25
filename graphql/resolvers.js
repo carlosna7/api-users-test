@@ -41,7 +41,7 @@ module.exports = {
 
                 const token = jwt.sign(
                     {
-                        id: createdUser._id,
+                        // id: createdUser._id,
                         name: createdUser.name,
                     },
                     'token-jwt-carlosna7', 
@@ -84,7 +84,7 @@ module.exports = {
 
                     const token = jwt.sign(
                         {
-                            id: user._id,
+                            // id: user._id,
                             name: user.name,
                         },
                         'token-jwt-carlosna7', 
