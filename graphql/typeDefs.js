@@ -15,7 +15,7 @@ module.exports = gql`
     type Task {
         id: ID!
         name: String!
-        responsible: String!
+        responsible: [String]!
         createdAt: String!
     }
 
@@ -33,7 +33,7 @@ module.exports = gql`
 
     input TaskInput {
         name: String!
-        responsible: String!
+        responsible: [String]!
         email: String!
     }
 
