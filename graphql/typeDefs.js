@@ -15,7 +15,7 @@ module.exports = gql`
     type Task {
         id: ID!
         name: String!
-        responsible: [String]!
+        responsible: String!
         createdAt: String!
     }
 
