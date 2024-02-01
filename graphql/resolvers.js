@@ -41,7 +41,7 @@ module.exports = {
 
                 const token = jwt.sign(
                     {
-                        // id: createdUser._id,
+                        email: createdUser.email,
                         name: createdUser.name,
                     },
                     'token-jwt-carlosna7', 
@@ -84,7 +84,7 @@ module.exports = {
 
                     const token = jwt.sign(
                         {
-                            // id: user._id,
+                            email: user.email,
                             name: user.name,
                         },
                         'token-jwt-carlosna7', 
@@ -111,7 +111,7 @@ module.exports = {
             }
         },
 
-        async createTask(_, {taskInput: {name, responsible}}) {
+        async createTask(_, {taskInput: {name, responsible, email}}) {
             try {
 
                 const createdTask = new Task({
@@ -122,11 +122,14 @@ module.exports = {
                 })
 
                 console.log("teste log")
-
+               
                 const res = await createdTask.save() // Save on mongoDB
+                
+                const user = await User.findOne({ email })
+                // const user = await User.findById({ id })
+                // const user = await User.findOne({ name })
 
-                const user = await User.findById("207228")
-                // const user2 = await User.findById({ id })
+                console.log(user)
 
                 if (!user) {
                     throw new Error('Usuário não encontrado!')
